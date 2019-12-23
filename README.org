@@ -1,0 +1,48 @@
+#+TITLE: Rotate Phrases
+
+Switch among predefined phrases with a single command.
+
+I've often found myself copying code and making a few small changes repeatedly.  Maybe that one method suddenly needs to become static and private.  Maybe I accidentally typed ~self~, when I really meant ~$this~.  For those occasions I can quickly flip ~cl-flet~ to ~cl-labels~ by carefully smashing my keyboard and get on with my day.
+
+* Commands
+~rotfr-rotate-this~ and ~rotfr-rotate-this-reversed~.  I have mine bound to =C-n= and =C-N=, but that's just because of =evil=.
+* Rotations
+The default looks like this, but be sure to change it to your needs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq rotfr-rotation-sets
+    '((:rot ("yes" "no" "maybe so"))
+      (:mode php-mode :rot ("public" "protected" "private"
+                            "public static" "protected static" "private static"))
+      (:mode php-mode :rot ("@param[in]" "@param[out]" "@param[in/out]"))
+      (:mode php-mode :rot ("class" "abstract class" "interface"))
+      (:mode php-mode :rot ("namespace" "use"))
+      (:mode php-mode :rot ("==" "===" "!=" "!==" "<" "<=" ">" ">="))
+      (:mode php-mode :rot ("self::" "$this->"))
+      (:mode emacs-lisp-mode :rot ("cl-labels" "cl-flet"))
+      (:mode emacs-lisp-mode :rot ("let" "let*"))
+      (:mode emacs-lisp-mode :rot ("buffer-substring" "buffer-substring-no-properties"))
+      (:mode emacs-lisp-mode :rot ("substring" "substring-no-properties"))
+      (:mode emacs-lisp-mode :rot ("string=" "string-equal"))
+      (:mode emacs-lisp-mode :rot ("string<" "string-lessp"))
+      (:mode emacs-lisp-mode :rot ("string>" "string-greaterp"))
+      (:mode prog-mode :rot ("&&" "||"))
+      (:mode text-mode :rot ("and" "or" "either"))))
+#+END_SRC
+
+Here's the default doc string.
+
+#+BEGIN_QUOTE
+  Rotate phrase phrase rotations.
+
+  List of plists where each plist must have:
+  :rot  List of words or phrases to cycle through.
+
+  Plists may have the keys:
+  :mode  symbol or list of symbols that must match the major mode of the
+         buffer.
+  :bounds  ensures phrase has boundries that match thing.  By default
+           thing is 'same-syntax.
+#+END_QUOTE
+* Similar libraries
+This does the same thing as [[https://github.com/dp12/parrot][parrot]], but supports spaces and has less parrots.
