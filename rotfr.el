@@ -121,7 +121,7 @@ and replacement phrase."
                                    best-end (elt found 1)
                                    best-length (length word)
                                    best-next-word next-word))))
-        (map nil #'update-matches rot (cdr (-cycle rot))))
+        (cl-map nil #'update-matches rot (cdr (-cycle rot))))
       (when best-next-word
         (list best-start best-end best-next-word)))))
 
